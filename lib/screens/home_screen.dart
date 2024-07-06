@@ -102,10 +102,13 @@ class CharaterList extends StatelessWidget {
               child: Card(
                 child: Column(
                   children: [
-                    FadeInImage(
-                        placeholder: const AssetImage(
-                            'assets/images/portal-rick-and-morty.gif'),
-                        image: NetworkImage(character.image!)),
+                    Hero(
+                      tag: character.id!,
+                      child: FadeInImage(
+                          placeholder: const AssetImage(
+                              'assets/images/portal-rick-and-morty.gif'),
+                          image: NetworkImage(character.image!)),
+                    ),
                     Text(
                       character.name!, // propiedad Nombre de la clase caracter.
                       style: const TextStyle(

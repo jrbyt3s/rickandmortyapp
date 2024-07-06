@@ -15,7 +15,7 @@ final GoRouter _router = GoRouter(routes: [
         builder: (context, state) {
           final character = state.extra as Character; //con el extra envíamos el objeto Character
           return CharacterScreen(character: character,);
-        })
+        }) 
   ])
 ]);
 

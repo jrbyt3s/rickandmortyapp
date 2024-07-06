@@ -8,11 +8,30 @@ class CharacterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(character
             .name!), // aqui extraemos el nombre del personaje para ponerlo de titulo en el navBar
+      ),
+      body: SizedBox(
+        height: double.infinity,
+        width: double.infinity,
+        child: Column(
+          children: [
+            SizedBox(
+              height: size.height * 0.35,
+              width: double.infinity,
+              child: Hero(
+                  tag: character.id!,
+                  child: Image.network(
+                    character.image!,
+                    fit: BoxFit.cover,
+                  )),
+            )
+          ],
+        ),
       ),
     );
   }
