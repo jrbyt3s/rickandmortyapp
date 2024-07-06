@@ -11,14 +11,30 @@ class HomeScreen extends StatefulWidget {
 } // termina definicion de la clase
 
 class _HomeScreenState extends State<HomeScreen> {
-// DECLARAMOS UN initState para usar con el provider
+  final scrollController = ScrollController();
+  bool isLoading = false;
+  int page = 1;
+  // DECLARAMOS UN initState para usar con el provider
   @override
   void initState() {
     super.initState();
     final apiProvider = Provider.of<ApiProvider>(context,
         listen:
             false); // fals e paraq no se llame desde aqui, antes que contruya la vista
-    apiProvider.getCharacter();
+    apiProvider.getCharacters(page);
+    scrollController.addListener(() async {
+      if (scrollController.position.pixels ==
+          scrollController.position.maxScrollExtent) {
+        setState(() {
+          isLoading = true;
+        });
+        page++;
+        await apiProvider.getCharacters(page);
+        setState(() {
+          isLoading = false;
+        });
+      }
+    });
   }
 
   @override
@@ -40,6 +56,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: apiProvider.characters.isNotEmpty
             ? CharaterList(
                 apiProvider: apiProvider,
+                isLoading: isLoading,
+                scrollController: scrollController,
               )
             : const Center(
                 child: CircularProgressIndicator(),
@@ -50,8 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CharaterList extends StatelessWidget {
-  const CharaterList({super.key, required this.apiProvider});
+  const CharaterList(
+      {super.key,
+      required this.apiProvider,
+      required this.scrollController,
+      required this.isLoading});
+
   final ApiProvider apiProvider;
+  final ScrollController scrollController;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -62,8 +87,10 @@ class CharaterList extends StatelessWidget {
             mainAxisSpacing: 5,
             crossAxisSpacing: 5),
         itemCount: apiProvider.characters.length,
+        controller: scrollController,
         itemBuilder: (context, index) {
-          final character = apiProvider.characters[index];
+          if(index < apiProvider.characters.length){
+            final character = apiProvider.characters[index];
           // usamos el gesture detetor para hacer que detecte el onTap() y nos navegue a otra pagina.
           // El gesture detector envuelve a la Card
           return GestureDetector(
@@ -78,7 +105,7 @@ class CharaterList extends StatelessWidget {
                           'assets/images/portal-rick-and-morty.gif'),
                       image: NetworkImage(character.image!)),
                   Text(
-                    character.name!,
+                    character.name!, // propiedad Nombre de la clase caracter.
                     style: const TextStyle(
                         fontSize: 16, overflow: TextOverflow.ellipsis),
                   ),
@@ -86,6 +113,10 @@ class CharaterList extends StatelessWidget {
               ),
             ),
           );
+          } else{
+            return const Center(child: CircularProgressIndicator(),);
+          }
+          
         });
   }
 }
