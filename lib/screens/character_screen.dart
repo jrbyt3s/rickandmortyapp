@@ -29,10 +29,43 @@ class CharacterScreen extends StatelessWidget {
                     character.image!,
                     fit: BoxFit.cover,
                   )),
+            ),
+            //Conteiner es una tira Horizontal (ROW)
+            Container(
+              padding: EdgeInsets.all(10),
+              height: size.height * 0.14,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  cardData("status", character.status!),
+                  cardData("especie", character.species!),
+                  cardData("status", character.origin!.name!),
+                ],
+              ),
             )
           ],
         ),
       ),
     );
+  }
+
+  Widget cardData(String text1, String text2) {
+    return Expanded(
+        child: Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Text(text1),
+          Text(
+            text2,
+            style: TextStyle(overflow: TextOverflow.ellipsis),
+          )
+        ],
+      ),
+    ));
   }
 }
