@@ -50,7 +50,8 @@ class CharacterScreen extends StatelessWidget {
             const Text(
               'Episodes',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-            )
+            ),
+            EpisodeList(size: size, character: character),
           ],
         ),
       ),
@@ -73,5 +74,43 @@ class CharacterScreen extends StatelessWidget {
         ],
       ),
     ));
+  }
+}
+
+//widged: lista de episodios:
+class EpisodeList extends StatefulWidget {
+  const EpisodeList({super.key, required this.size, required this.character});
+  final Size size;
+  final Character character;
+
+  @override
+  State<EpisodeList> createState() => _EpisodeListState();
+}
+
+class _EpisodeListState extends State<EpisodeList> {
+  @override
+  void initState() {
+    super.initState();
+    final apiProvider = Provider.of<ApiProvider>(context, listen: false);
+    apiProvider.getEpisode(widget.character);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final apiProvider = Provider.of<ApiProvider>(context);
+    return SizedBox(
+      height: widget.size.height * 0.35,
+      child: ListView.builder(
+        itemCount: apiProvider.episodes.length,
+        itemBuilder: (context, index) {
+          final episode = apiProvider.episodes[index];
+          return ListTile(
+            leading: Text(episode.episode!),
+            title: Text(episode.name!),
+            trailing: Text(episode.airDate!),
+          );
+        },
+      ),
+    );
   }
 }
