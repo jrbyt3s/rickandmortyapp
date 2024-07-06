@@ -25,6 +25,7 @@ class ApiProvider with ChangeNotifier {
       final result = await http.get(Uri.parse(character.episode![i]));
       final response = episodeFromJson(result.body);
       episodes.add(response);
+      notifyListeners();
     }
 
     return episodes;

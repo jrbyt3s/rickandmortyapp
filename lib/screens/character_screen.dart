@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:rickandmortyapp/models/character_model.dart';
+import 'package:rickandmortyapp/provider/api_provider.dart';
 
 class CharacterScreen extends StatelessWidget {
   const CharacterScreen({super.key, required this.character});
@@ -73,6 +75,3 @@ class CharacterScreen extends StatelessWidget {
     ));
   }
 }
-
-  //widged state
-  
