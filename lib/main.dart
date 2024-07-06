@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rickandmortyapp/provider/api_provider.dart';
 import 'package:rickandmortyapp/screens/character_screen.dart';
 import 'package:rickandmortyapp/screens/home_screen.dart';
 import 'package:go_router/go_router.dart';
@@ -16,14 +18,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'Rick and Morty App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        useMaterial3: true,
+    return ChangeNotifierProvider(
+      create: (context) => ApiProvider(),
+      child: MaterialApp.router(
+        title: 'Rick and Morty App',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          useMaterial3: true,
+        ),
+        routerConfig: _router,
       ),
-      routerConfig: _router,
     );
   }
 }
