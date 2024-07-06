@@ -44,6 +44,10 @@ class CharacterScreen extends StatelessWidget {
                   cardData("status", character.origin!.name!),
                 ],
               ),
+            ),
+            const Text(
+              'Episodes',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
             )
           ],
         ),
@@ -69,3 +73,6 @@ class CharacterScreen extends StatelessWidget {
     ));
   }
 }
+
+  //widged state
+  
