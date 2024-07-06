@@ -68,7 +68,16 @@ class CharaterList extends StatelessWidget {
               context.go('/character');
             },
             child: Card(
-              child: Text(character.name!),
+              child: Column(
+                children: [
+                  const FlutterLogo(),
+                  Text(
+                    character.name!,
+                    style: const TextStyle(
+                        fontSize: 16, overflow: TextOverflow.ellipsis),
+                  ),
+                ],
+              ),
             ),
           );
         });
