@@ -56,8 +56,11 @@ class CharaterList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.87,
+            mainAxisSpacing: 5,
+            crossAxisSpacing: 5),
         itemCount: apiProvider.characters.length,
         itemBuilder: (context, index) {
           final character = apiProvider.characters[index];
@@ -70,7 +73,10 @@ class CharaterList extends StatelessWidget {
             child: Card(
               child: Column(
                 children: [
-                  const FlutterLogo(),
+                  FadeInImage(
+                      placeholder: const AssetImage(
+                          'assets/images/portal-rick-and-morty.gif'),
+                      image: NetworkImage(character.image!)),
                   Text(
                     character.name!,
                     style: const TextStyle(
