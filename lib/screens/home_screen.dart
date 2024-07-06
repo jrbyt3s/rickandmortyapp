@@ -89,34 +89,37 @@ class CharaterList extends StatelessWidget {
         itemCount: apiProvider.characters.length,
         controller: scrollController,
         itemBuilder: (context, index) {
-          if(index < apiProvider.characters.length){
+          if (index < apiProvider.characters.length) {
             final character = apiProvider.characters[index];
-          // usamos el gesture detetor para hacer que detecte el onTap() y nos navegue a otra pagina.
-          // El gesture detector envuelve a la Card
-          return GestureDetector(
-            onTap: () {
-              context.go('/character');
-            },
-            child: Card(
-              child: Column(
-                children: [
-                  FadeInImage(
-                      placeholder: const AssetImage(
-                          'assets/images/portal-rick-and-morty.gif'),
-                      image: NetworkImage(character.image!)),
-                  Text(
-                    character.name!, // propiedad Nombre de la clase caracter.
-                    style: const TextStyle(
-                        fontSize: 16, overflow: TextOverflow.ellipsis),
-                  ),
-                ],
+            // usamos el gesture detetor para hacer que detecte el onTap() y nos navegue a otra pagina.
+            // El gesture detector envuelve a la Card
+            return GestureDetector(
+              onTap: () {
+                context.go('/character',
+                    extra:
+                        character); // con el extra le enviamos el objeto character al screen character
+              },
+              child: Card(
+                child: Column(
+                  children: [
+                    FadeInImage(
+                        placeholder: const AssetImage(
+                            'assets/images/portal-rick-and-morty.gif'),
+                        image: NetworkImage(character.image!)),
+                    Text(
+                      character.name!, // propiedad Nombre de la clase caracter.
+                      style: const TextStyle(
+                          fontSize: 16, overflow: TextOverflow.ellipsis),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-          } else{
-            return const Center(child: CircularProgressIndicator(),);
+            );
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           }
-          
         });
   }
 }
